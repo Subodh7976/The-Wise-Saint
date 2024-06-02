@@ -4,7 +4,6 @@ import requests
 from PIL import Image
 from io import BytesIO
 import matplotlib.pyplot as plt
-from pydantic import Field 
 import urllib
 
 
@@ -16,21 +15,23 @@ class MathsToolSpec(BaseToolSpec):
 
     spec_functions = [
         "graph_plot", 
-        "show_steps"
+        "show_steps", 
+        "calculator"
     ]
 
     def __init__(self, wolfram_app_id: str = app_id):
         self.wolfram_app_id = wolfram_app_id
 
-    def graph_plot(self, query: str = Field(
-            description="the query of mathematical function or equation, which needs to plotted. formatted like '<function> = y'"
-    )) -> str:
+    def graph_plot(self, query: str) -> str:
         '''
         function for plotting the graph for the given mathematical function or equation, in text format.
 
+        Args:
+            query: str - the query of mathematical function or equation, which needs to plotted
         Returns:
             str - whether the plot is successfully plotted or not.
         '''
+        query = "plot " + query
         query = urllib.parse.quote_plus(query)
     # URL for the Wolfram Alpha API
         url = f'http://api.wolframalpha.com/v2/query?input={query}&format=image,plaintext&output=JSON&appid={self.wolfram_app_id}'
@@ -44,7 +45,7 @@ class MathsToolSpec(BaseToolSpec):
             pods = data['queryresult']['pods']
             image_url = None
             for pod in pods:
-                if 'Plot' in pod['title']:
+                if 'plot' in pod['title'].lower():
                     subpods = pod['subpods']
                     for subpod in subpods:
                         if 'img' in subpod:
@@ -71,12 +72,12 @@ class MathsToolSpec(BaseToolSpec):
             return "No plot found"
 
 
-    def show_steps(self, query: str = Field(
-            description="the mathematical query, in the form of expression or equation which needs to be solved. format - '<equation or expression>, <optinoal parameters>'"
-    )) -> str:
+    def show_steps(self, query: str) -> str:
         '''
         function for solving a mathematical expression or equation, and providing each steps for the solution.
 
+        Args: 
+            query: str - the mathematical query, in the form of expression or equation which needs to be solved
         Returns:
             str - solution with complete steps of solution
         '''
@@ -92,7 +93,7 @@ class MathsToolSpec(BaseToolSpec):
         steps = []
         pods = data['queryresult']['pods']
         for pod in pods:
-            if 'Solution' in pod['title'] or 'Result' in pod['title']:
+            if 'Solution' in pod['title'] or 'Result' in pod['title'] or 'steps' in pod['title']:
                 subpods = pod['subpods']
                 for subpod in subpods:
                     if 'plaintext' in subpod:
@@ -108,12 +109,12 @@ class MathsToolSpec(BaseToolSpec):
         
         return message
 
-    def calculator(self, equation: str = Field(
-            description="equation to be solved by the calculator, '<equation/expression>'"
-    )):
+    def calculator(self, equation: str):
         '''
         fucntion for solving equation with precise calculation, and returns the solution of the equation or expression
 
+        Args:
+            equation: str - equation to be solved by the calculator
         Example inputs:
             "(7 * 12 ^ 10) / 321"
             "How many calories are there in a pound of strawberries"
