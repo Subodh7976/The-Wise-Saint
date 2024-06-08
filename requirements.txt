@@ -3,9 +3,12 @@ llama-index-llms-gemini
 llama-index-tools-wikipedia
 langchain 
 langchain-google-genai
+langchain-community
+langgraph
 google-generativeai
 ipykernel
 matplotlib 
 numpy 
 pandas
 pillow
+pygraphviz
