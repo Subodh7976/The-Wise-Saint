@@ -5,18 +5,9 @@ from typing import List, Union
 from collections import Counter
 import torch
 import numpy as np
-import random
-from transformers import (
-    RobertaTokenizerFast,
-    VisionEncoderDecoderModel,
-    GenerationConfig,
-)
-from matplotlib import pyplot as plt
+from config import FIXED_IMG_SIZE, IMAGE_MEAN, IMAGE_STD, IMG_CHANNELS
 
 
-IMAGE_MEAN = 0.9545467
-IMAGE_STD  = 0.15394445
-FIXED_IMG_SIZE = 448
 
 general_transform_pipeline = v2.Compose([
     v2.ToImage(),    
@@ -84,3 +75,27 @@ def inference_transform(images: List[Union[np.ndarray, Image.Image]]) -> List[to
     images = padding(images, FIXED_IMG_SIZE)
 
     return images
+
+
+
+def convert2rgb(image_paths: List[str]) -> List[np.ndarray]:
+    processed_images = []
+    for path in image_paths:
+        image = cv2.imread(path, cv2.IMREAD_UNCHANGED)
+        if image is None:
+            print(f"Image at {path} could not be read.")
+            continue
+        if image.dtype == np.uint16:
+            print(f'Converting {path} to 8-bit, image may be lossy.')
+            image = cv2.convertScaleAbs(image, alpha=(255.0/65535.0))
+
+        channels = 1 if len(image.shape) == 2 else image.shape[2]
+        if channels == 4:
+            image = cv2.cvtColor(image, cv2.COLOR_BGRA2RGB)
+        elif channels == 1:
+            image = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
+        elif channels == 3:
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        processed_images.append(image)
+
+    return processed_images
