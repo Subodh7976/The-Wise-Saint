@@ -2,8 +2,8 @@ import gradio as gr
 import numpy as np
 from PIL import Image
 import torch
-from transformers import RobertaTokenizerFast, VisionEncoderDecoderModel
-from agent import MathsTutor
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from .agent import MathsTutor
 from img2latex.inference import inference
 
 def load_image(image) -> np.ndarray:
@@ -11,12 +11,14 @@ def load_image(image) -> np.ndarray:
     return np.array(image)
 
 def process_input(image, text):
-    accelerator = "cuda"  # Use "cuda" if you have a GPU
+    model_path = "path/to/model"  # Update with your model path
+    tokenizer_path = "path/to/tokenizer"  # Update with your tokenizer path
+    accelerator = "cpu"  # Use "cuda" if you have a GPU
     num_beams = 1
     max_tokens = None
 
-    tokenizer = RobertaTokenizerFast.from_pretrained("OleehyO/TexTeller")
-    model = VisionEncoderDecoderModel.from_pretrained("OleehyO/TexTeller")
+    model = AutoModelForSeq2SeqLM.from_pretrained(model_path)
+    tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
     
     combined_input = ""
 
@@ -42,17 +44,22 @@ def process_input(image, text):
     else:
         return "No input provided."
 
-iface = gr.Interface(
-    fn=process_input,
-    inputs=[
-        gr.Image(type="filepath", label="Upload Image"),
-        gr.Textbox(lines=2, placeholder="Enter text here...", label="Text Input")
-    ],
-    outputs="text",
-    title="Math Tutor",
-    description="Upload an image or enter text to get help from the math tutor.",
-    theme="default",
-    live=True
-)
+with gr.Blocks() as demo:
+    gr.Markdown("# Math Tutor")
+    gr.Markdown("Upload an image or enter text to get help from the math tutor.")
 
-iface.launch()
+    with gr.Row():
+        image_input = gr.Image(type="file", label="Upload Image")
+        text_input = gr.Textbox(lines=2, placeholder="Enter text here...", label="Text Input")
+
+    submit_btn = gr.Button("Submit")
+
+    output_text = gr.Textbox(lines=10, label="Output")
+
+    submit_btn.click(
+        fn=process_input,
+        inputs=[image_input, text_input],
+        outputs=output_text
+    )
+
+demo.launch()
