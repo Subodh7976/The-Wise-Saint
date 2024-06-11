@@ -5,7 +5,7 @@ from typing import List, Union
 from collections import Counter
 import torch
 import numpy as np
-from config import FIXED_IMG_SIZE, IMAGE_MEAN, IMAGE_STD, IMG_CHANNELS
+from .config import FIXED_IMG_SIZE, IMAGE_MEAN, IMAGE_STD, IMG_CHANNELS
 
 
 

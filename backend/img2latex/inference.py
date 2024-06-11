@@ -2,9 +2,9 @@ from typing import Union, List
 import torch
 from transformers import GenerationConfig
 import numpy as np
-from transform import convert2rgb, inference_transform
-from config import MAX_TOKEN_SIZE
-from to_katex import to_katex
+from .transform import convert2rgb, inference_transform
+from .config import MAX_TOKEN_SIZE
+from .to_katex import to_katex
 
 
 def inference(
