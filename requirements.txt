@@ -13,3 +13,5 @@ numpy
 pandas
 pillow
 pygraphviz
+opencv-python-headless
+transformers
