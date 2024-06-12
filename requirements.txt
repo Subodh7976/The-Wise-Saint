@@ -14,3 +14,10 @@ pandas
 pillow
 pygraphviz
 fastapi
+opencv-python-headless
+transformers
+torch
+uvicorn
+fastapi
+torchvision
+gradio
