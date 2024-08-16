@@ -4,6 +4,7 @@ llama-index-tools-wikipedia
 langchain 
 langchain-google-genai
 langchain-community
+langchain-nvidia-ai-endpoints
 langgraph
 google-generativeai
 ipykernel
@@ -21,3 +22,4 @@ uvicorn
 fastapi
 torchvision
 gradio
+markdown-pdf
