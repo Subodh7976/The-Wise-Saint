@@ -11,3 +11,7 @@ Use the google_search_scrape function to retrieve relevant context for different
 
 You can generate write one or more search queries to retrieve relevant context.
 """
+
+EQUATION_SOLVER_PROMPT = """
+
+"""

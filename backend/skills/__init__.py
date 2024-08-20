@@ -1,1 +1,2 @@
 from .google_search_scrape import google_search_scrape
+from .maths_solver import maths_solver

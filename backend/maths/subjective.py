@@ -2,7 +2,7 @@ from langchain_core.messages import SystemMessage, HumanMessage
 from langchain_nvidia_ai_endpoints import ChatNVIDIA
 import os
 
-from skills.google_search_scrape import google_search_scrape
+from skills import google_search_scrape
 from .prompts import SUBJECTIVE_PROMPT
 
 
