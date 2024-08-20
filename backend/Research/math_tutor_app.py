@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 import torch
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-from .agent import MathsTutor
+from .Research.agent import MathsTutor
 from img2latex.inference import inference
 
 def load_image(image) -> np.ndarray:

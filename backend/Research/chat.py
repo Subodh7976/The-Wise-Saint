@@ -1,4 +1,4 @@
-from tools import MathsToolSpec
+from .tools import MathsToolSpec
 from llama_index.tools.wikipedia import WikipediaToolSpec
 from llama_index.core.agent import ReActAgent
 from llama_index.llms.gemini import Gemini

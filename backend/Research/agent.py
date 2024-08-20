@@ -8,8 +8,8 @@ from langchain_core.exceptions import OutputParserException
 
 from typing import TypedDict, List, Any
 
-from pydantic_models import Steps, StepPlan
-from prompts import *
+from backend.Research.pydantic_models import Steps, StepPlan
+from .prompts import *
 from constants import *
 
 

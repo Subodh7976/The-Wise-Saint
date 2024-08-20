@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from agent import MathsTutor
+from .agent import MathsTutor
 # from pydantic_models import Query
 
 from pydantic import BaseModel
