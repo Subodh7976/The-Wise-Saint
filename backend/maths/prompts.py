@@ -15,3 +15,15 @@ You can generate write one or more search queries to retrieve relevant context.
 EQUATION_SOLVER_PROMPT = """
 
 """
+
+MATHS_SOLVER_AGENT_PROMPT = """
+
+"""
+
+SOLUTION_CRITIC_AGENT_PROMPT = """
+
+"""
+
+ORCHESTRATING_AGENT_PROMPT = """
+
+"""

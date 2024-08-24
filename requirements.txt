@@ -1,6 +1,7 @@
 llama-index 
 llama-index-llms-gemini
 llama-index-tools-wikipedia
+llama-index-llms-nvidia
 langchain 
 langchain-google-genai
 langchain-community
