@@ -44,4 +44,4 @@ def image_generation(prompt:str):
     response_body = response.json()
     return response_body
 
-image_generation("sample")
+# image_generation("sample")
