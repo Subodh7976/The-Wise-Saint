@@ -3,7 +3,16 @@ import os
 
 api_key = os.getenv("SDXL_API_KEY")
 
-def generate_image(prompt):
+def image_generation(prompt:str):
+    """
+    Generate images for the given prompt using SDXL
+
+    Parameters:
+        prompt(str): The prompt relevant to the context to generate images 
+    
+    Returns:
+        response_body(str): Image base64 encoding
+    """
     url = "https://ai.api.nvidia.com/v1/genai/stabilityai/stable-diffusion-xl"
 
     payload = {
@@ -34,3 +43,5 @@ def generate_image(prompt):
     response.raise_for_status()
     response_body = response.json()
     return response_body
+
+image_generation("sample")
